@@ -75,7 +75,7 @@ class DotInteraction(tf.keras.layers.Layer):
       concat_features = tf.reshape(concat_features,
                                    [batch_size, -1, feature_dim])
     except (ValueError, tf.errors.InvalidArgumentError) as e:
-      raise ValueError(f"Input tensors` dimensions must be equal, original"
+      raise ValueError("Input tensors` dimensions must be equal, original"
                        f"error message: {e}")
 
     # Interact features, select lower-triangular portion, and re-shape.
