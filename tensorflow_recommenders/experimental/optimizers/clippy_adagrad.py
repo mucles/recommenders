@@ -16,6 +16,7 @@
 from typing import Any, Dict, Sequence, Tuple, Union
 
 import tensorflow as tf
+import math
 
 
 def shrink_by_references(tensor: tf.Tensor, references: Sequence[tf.Tensor],
@@ -65,7 +66,7 @@ def shrink_by_references(tensor: tf.Tensor, references: Sequence[tf.Tensor],
   # tensor[i] and max_delta[i] may be zeros. If max_delta is zero, then scale
   # must be zero, and if tensor is zero, scale is arbitrary.
   per_element_scale = tf.where(
-      tensor == 0., 1., tf.math.divide_no_nan(max_delta, tf.math.abs(tensor)))
+      math.isclose(tensor, 0., rel_tol=1e-09, abs_tol=0.0), 1., tf.math.divide_no_nan(max_delta, tf.math.abs(tensor)))
   scale = tf.minimum(1., tf.reduce_min(per_element_scale))
   return tensor * scale, scale
 
