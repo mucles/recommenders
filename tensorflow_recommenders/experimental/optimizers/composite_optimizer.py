@@ -75,7 +75,7 @@ class CompositeOptimizer(tf.keras.optimizers.legacy.Optimizer):
       for v in var_callable():
         if v.ref() in var_optimizer_dict:
           raise ValueError(
-              f"The set of variables handled by each optimizer should be "
+              "The set of variables handled by each optimizer should be "
               f"disjoint, but variable {v} is handled both "
               f"by {var_optimizer_dict[v.ref()]} and {optimizer}.")
         var_optimizer_dict[v.ref()] = optimizer
@@ -87,7 +87,7 @@ class CompositeOptimizer(tf.keras.optimizers.legacy.Optimizer):
         optimizer_grads_and_vars[optimizer].append((g, v))
       else:
         raise ValueError(f"Variable {v} is not handled by any optimizer. "
-                         f"This would cause it to be not trained.")
+                         "This would cause it to be not trained.")
 
     for optimizer, opt_grads_and_vars in optimizer_grads_and_vars.items():
       optimizer.apply_gradients(
